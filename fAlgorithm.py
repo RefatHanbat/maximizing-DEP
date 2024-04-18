@@ -45,11 +45,13 @@ def myf_algorihtm_1(sys_param,channel):
 
     fourth_portion = (zeta - 1/zeta) * (sigma_square_W / h_DW_sq_mgn)
 
-    P_D_ub = np.array(min(first_portion,min(second_portion,third_portion,fourth_portion,P_D_bar)))
+    P_D_ub = min(first_portion,min(second_portion,third_portion,fourth_portion,P_D_bar))
+
+    P_D_opt = max(0,P_D_ub)
 
     solutions = {}
 
-    solutions["P_D"] = np.copy(P_D_ub)
+    solutions["P_D"] = np.copy(P_D_opt)
 
     return solutions
 

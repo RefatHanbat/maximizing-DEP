@@ -12,13 +12,13 @@ sys_param = system_parametes()
 
 num_samples = 1
 
-x_axis_name ="err_min_cand"
+x_axis_name ="noise_uncertainty_zeta_dB"
 
 if (x_axis_name == "P_S_dBm_cand"):
 
     x_axis_cand = np.arange(start=0, stop=55, step=5)
 
-elif(x_axis_name=="err_min_cand"):
+elif(x_axis_name=="noise_uncertainty_zeta_dB"):
 
      x_axis_cand = np.arange(start = 0, stop = 0.55, step = 0.05)
 
@@ -55,19 +55,23 @@ for ind1 in range(0,num_samples):
 
             sys_param["P_S"] = 10**(sys_param["P_S_dBm"]/10) / (10**3)
 
-        elif(x_axis_name =="err_min_cand"):
+        elif(x_axis_name =="noise_uncertainty_zeta_dB"):
 
-            sys_param["epsilon"] = x_axis_cand[ind2]
+            sys_param["noise_uncertainty_zeta_dB"] = x_axis_cand[ind2]
+            
+            sys_param["noise_uncertainty_zeta"] =10**(sys_param["noise_uncertainty_zeta_dB"]/10)
+
   
         solutions_algorithm_1 = myf_algorihtm_1(sys_param,channel)
 
+        
+        
         r_D_E_P_temp[0,ind2] = myf_DEP(sys_param,channel,solutions_algorithm_1)
 
-        
-    print(r_D_E_P_temp)
-    # r_D_E_P = (ind1 + 1 - 1) / (ind1 + 1) * r_D_E_P + 1/(ind1 + 1)*r_D_E_P_temp
+    # print(r_D_E_P_temp)    
+    # # r_D_E_P = (ind1 + 1 - 1) / (ind1 + 1) * r_D_E_P + 1/(ind1 + 1)*r_D_E_P_temp
 
-    # print(r_D_E_P)
+    # # print(r_D_E_P)
 
 
 

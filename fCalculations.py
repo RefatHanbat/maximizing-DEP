@@ -10,10 +10,13 @@ def myf_DEP(sys_param,channel,solutions):
 
     P_D = solutions["P_D"]
 
-    numerator = np.abs(h_DW)**2 * P_D + (1 / No_W_unc) * No_W
+
+    # numerator = np.abs(h_DW)**2 * P_D + (1 / No_W_unc) * No_W
 
     denominator = (1/No_W_unc)*No_W
 
-    DEP = (1/2)*(1-(1/(2*np.log(No_W_unc))) * np.log(numerator/denominator))
+    print("np.log(No_W_unc) : ",np.log(No_W_unc))
 
-    return DEP
+    # DEP = (1/2)*(1-(1/(2*np.log(No_W_unc))) * np.log(numerator/denominator))
+
+    # return DEP
