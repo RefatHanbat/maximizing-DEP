@@ -181,7 +181,7 @@ def myf_plot_Solutions_P_D(sys_param,x_axis_variables,Solutions_P_D, x_axis_vari
         axes.legend(loc="best")
         axes.set_xlabel('Noise uncertainity bound')
 
-    axes.set_ylabel(r'Average covert rate ')
+    axes.set_ylabel(r'Average P_D ')
 
     axes.set_xlim(min(x_axis_variables),max(x_axis_variables))
 
@@ -192,9 +192,9 @@ def myf_plot_Solutions_P_D(sys_param,x_axis_variables,Solutions_P_D, x_axis_vari
 
 
 def myf_plot_DEP(sys_param, x_axis_variables, DEP, x_axis_variables_label):
-
+    
     fig, axes = plt.subplots(1, 1)
-
+    
     axes.plot(x_axis_variables, DEP[0], 'b*-', markersize=12, markerfacecolor="None", label=r'optimal (DEP)')
     axes.plot(x_axis_variables, DEP[1], 'mo--', markersize=6, markerfacecolor="None",
               label=r'$5\%~P_S$ optimal (DEP)')
@@ -207,7 +207,8 @@ def myf_plot_DEP(sys_param, x_axis_variables, DEP, x_axis_variables_label):
 
     axes.grid()
 
-    if x_axis_variables_label == "P_S_dB_cand":
+    if x_axis_variables_label == "P_S_dBm_cand":
+        
         axes.legend(loc="best")
         axes.set_xlabel('Source transmit power $P_S$ (dBm)')
 
@@ -231,9 +232,13 @@ def myf_plot_DEP(sys_param, x_axis_variables, DEP, x_axis_variables_label):
         axes.legend(loc="best")
         axes.set_xlabel('Noise uncertainty bound')
 
-    axes.set_ylabel(r'Average covert rate')
+    elif x_axis_variables_label == "r_C_bar":
+        axes.legend(loc="best")
+        axes.set_xlabel('covert rate')
+
+    axes.set_ylabel(r'Average DEP')
     axes.set_xlim(min(x_axis_variables), max(x_axis_variables))
-    axes.set_ylim(0.4, 0.5)
+    # axes.set_ylim(0.4, 0.5)
 
     plt.show()
 
