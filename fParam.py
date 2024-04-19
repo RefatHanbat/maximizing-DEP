@@ -48,7 +48,7 @@ def system_parametes():
 
     sys_param["beta"] = 3.5
 
-    sys_param["r_C_bar"] = 0.09
+    sys_param["r_C_bar"] = 0.05
 
 
 

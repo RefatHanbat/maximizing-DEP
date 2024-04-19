@@ -73,18 +73,18 @@ def myf_algorithm_2(sys_param,channel,P_S_proportion_fixed):
 
     solutions = {}
 
-    # solutions["P_D"] = np.copy(P_D_opt)
+    solutions["P_D"] = np.copy(P_D_opt)
 
-    # if((r_P_bar <= myf_r_P_R(sys_param,channel,solutions)) and \
-    #         (r_P_bar <= myf_r_P_D(sys_param,channel,solutions)) and \
-    #           (myf_DEP(sys_param,channel,solutions) >= err_min)\
-    #           ):
+    if((r_P_bar <= myf_r_P_R(sys_param,channel,solutions)) and \
+            (r_P_bar <= myf_r_P_D(sys_param,channel,solutions)) and \
+              (myf_DEP(sys_param,channel,solutions) >= err_min)\
+              ):
         
-    #     None
+        None
 
-    # else:
+    else:
         
-    #     P_D_opt = 0
+        P_D_opt = 0
 
     solutions["P_D"] = np.copy(P_D_opt)
 

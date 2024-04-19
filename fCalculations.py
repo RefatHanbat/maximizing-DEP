@@ -22,3 +22,43 @@ def myf_DEP(sys_param,channel,solutions):
     DEP = (1/2)*(1-(1/2*np.log(No_W_unc)) * np.log(numerator/denominator))
 
     return DEP
+
+def myf_r_P_R(sys_param, channel, solutions):
+    
+    P_S = sys_param["P_S"]
+    
+    No_R = sys_param["sigma_square_R"]
+
+    h_SR = channel["h_SR"]
+
+    h_DR = channel["h_DR"]
+
+    P_D = solutions["P_D"]
+
+    numerator = np.abs(h_SR)**2 * P_S
+
+    denominator = np.abs(h_DR)**2 * P_D + No_R
+
+    r_P_R = np.log2(1 + numerator/denominator)
+    
+    return r_P_R
+
+def myf_r_P_D(sys_param,channel, solutions):
+
+    P_S = sys_param["P_S"]
+
+    No_D = sys_param["sigma_square_D"]
+
+    h_SD = channel["h_SD"]
+
+    h_DD_tilde = channel["h_DD_tilde"]
+
+    P_D = solutions["P_D"]
+
+    numerator = np.abs(h_SD)**2 * P_S
+
+    denominator = np.abs(h_DD_tilde)**2 * P_D + No_D
+
+    r_P_D = np.log2(1 + numerator/denominator)
+
+    return r_P_D

@@ -8,11 +8,13 @@ from fAlgorithm import*
 
 from fPlot import*
 
+from tqdm import tqdm
+
 sys_param = system_parametes()
 
 num_samples = 10000
 
-x_axis_name ="P_S_dBm_cand"
+x_axis_name ="r_C_bar"
 
 if (x_axis_name == "P_S_dBm_cand"):
 
@@ -21,6 +23,10 @@ if (x_axis_name == "P_S_dBm_cand"):
 elif(x_axis_name == "r_C_bar"):
 
     x_axis_cand = np.arange(start=0,stop=5.5, step=0.55)
+
+elif(x_axis_name=="r_P_bar_cand"):
+
+    x_axis_cand = np.arange(start=0, stop=2.2, step=0.2)
       
 
 
@@ -31,7 +37,11 @@ r_D_E_P = np.zeros((num_algorithms,np.size(x_axis_cand)))
 
 solutions_P_D = np.zeros((num_algorithms,np.size(x_axis_cand, axis=0 )))
 
-for ind1 in range(0,num_samples):
+r_P_R = np.zeros((num_algorithms,np.size(x_axis_cand)))
+
+r_P_D = np.zeros((num_algorithms,np.size(x_axis_cand)))
+
+for ind1 in tqdm(range(0,num_samples)):
 
     param_locations = {}
 
@@ -53,6 +63,10 @@ for ind1 in range(0,num_samples):
 
     solutions_P_D_temp = np.zeros((num_algorithms,np.size(x_axis_cand)))
 
+    r_P_R_temp = np.zeros((num_algorithms,np.size(x_axis_cand)))
+
+    r_P_D_temp = np.zeros((num_algorithms,np.size(x_axis_cand)))
+
     for ind2 in range(0,np.size(x_axis_cand, axis=0)):
 
         if(x_axis_name == "P_S_dBm_cand" ) :
@@ -64,6 +78,12 @@ for ind1 in range(0,num_samples):
         elif(x_axis_name == "r_C_bar"):
 
             sys_param["r_C_bar"] = x_axis_cand[ind2]
+
+        elif(x_axis_name == "r_P_bar_cand"):
+
+            sys_param["r_P_bar"] = x_axis_cand[ind2]
+
+        
             
             
 
@@ -73,13 +93,23 @@ for ind1 in range(0,num_samples):
 
         solutions_P_D_temp[0,ind2] = solutions_algorithm_1["P_D"]
 
+        r_P_R_temp[0,ind2] = myf_r_P_R(sys_param,channel,solutions_algorithm_1)
+
+        r_P_D_temp[0,ind2] = myf_r_P_D(sys_param,channel,solutions_algorithm_1)
+
+
+
         solutions_algorithm_2 = myf_algorithm_2(sys_param,channel,0.05)
         
         r_D_E_P_temp[1,ind2] = myf_DEP(sys_param,channel,solutions_algorithm_2)
 
         solutions_P_D_temp[1,ind2] = solutions_algorithm_2["P_D"]
 
-        
+        r_P_R_temp[1,ind2] = myf_r_P_R(sys_param,channel,solutions_algorithm_2)
+
+        r_P_D_temp[1,ind2] = myf_r_P_D(sys_param,channel,solutions_algorithm_2)
+
+
 
         solutions_algorithm_3 = myf_algorithm_2(sys_param,channel,0.01)
 
@@ -87,11 +117,20 @@ for ind1 in range(0,num_samples):
 
         solutions_P_D_temp[2,ind2] = solutions_algorithm_2["P_D"]
 
+        r_P_R_temp[2,ind2] = myf_r_P_R(sys_param,channel,solutions_algorithm_3)
+
+        r_P_D_temp[2,ind2] = myf_r_P_D(sys_param,channel,solutions_algorithm_3)
+
+
         solutions_algorithm_4 = myf_algorithm_2(sys_param,channel,0.001)
 
         r_D_E_P_temp[3,ind2] = myf_DEP(sys_param,channel,solutions_algorithm_4)
 
         solutions_P_D_temp[3,ind2] = solutions_algorithm_4["P_D"]
+
+        r_P_R_temp[3,ind2] = myf_r_P_R(sys_param,channel,solutions_algorithm_4)
+
+        r_P_D_temp[3,ind2] = myf_r_P_D(sys_param,channel,solutions_algorithm_4)
 
 
         solutions_algorithm_5 = myf_algorithm_2(sys_param,channel,np.random.rand())
@@ -99,17 +138,31 @@ for ind1 in range(0,num_samples):
         r_D_E_P_temp[4,ind2] = myf_DEP(sys_param,channel,solutions_algorithm_5)
 
         solutions_P_D_temp[4,ind2] = solutions_algorithm_4["P_D"]
+
+        r_P_R_temp[4,ind2] = myf_r_P_R(sys_param,channel,solutions_algorithm_5)
+
+        r_P_D_temp[4,ind2] = myf_r_P_D(sys_param,channel,solutions_algorithm_5)
+
     
     
     r_D_E_P = (ind1 + 1 - 1) / (ind1 + 1) * r_D_E_P + 1/(ind1 + 1)*r_D_E_P_temp
 
     solutions_P_D = (ind1 + 1 - 1) / (ind1 + 1) * solutions_P_D + 1/(ind1 + 1)*solutions_P_D_temp
 
+    r_P_R = (ind1 + 1 - 1) / (ind1 + 1) * r_D_E_P + 1/(ind1 + 1) * r_P_R_temp
+
+    r_P_D = (ind1 + 1 - 1) / (ind1 + 1) * r_P_D + 1/(ind1 + 1) * r_P_D_temp
+
 print(r_D_E_P)
+
 myf_plot_DEP(sys_param,x_axis_cand,r_D_E_P,x_axis_name)
 
 myf_plot_Solutions_P_D(sys_param,x_axis_cand,solutions_P_D, x_axis_name)
     
+
+myf_plot_r_P_R(sys_param, x_axis_cand, r_P_R, x_axis_name)
+
+myf_plot_r_P_D(sys_param,x_axis_cand,r_P_D,x_axis_name)
 
     
 

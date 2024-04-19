@@ -136,7 +136,7 @@ def myf_plot_r_C_R(sys_param, x_axis_variables, r_C_R, x_axis_variables_label):
     axes.set_ylim(0, max(np.amax(r_C_R), np.amax(r_C_R)) * 1.10)
 
     plt.show()
-
+######## plot for P_D #######
 def myf_plot_Solutions_P_D(sys_param,x_axis_variables,Solutions_P_D, x_axis_variables_label):
 
     fig, axes = plt.subplots(1,1)
@@ -157,7 +157,7 @@ def myf_plot_Solutions_P_D(sys_param,x_axis_variables,Solutions_P_D, x_axis_vari
     
     axes.grid()
 
-    if(x_axis_variables_label =="P_S_dB_cand"):
+    if(x_axis_variables_label =="P_S_dBm_cand"):
         axes.legend(loc="best")
         axes.set_xlabel('Source transmit power $P_S_dBm$')
 
@@ -180,6 +180,10 @@ def myf_plot_Solutions_P_D(sys_param,x_axis_variables,Solutions_P_D, x_axis_vari
     elif(x_axis_variables_label == "noise_uncertainty_bound_cand"):
         axes.legend(loc="best")
         axes.set_xlabel('Noise uncertainity bound')
+        
+    elif x_axis_variables_label == "r_C_bar":
+        axes.legend(loc="best")
+        axes.set_xlabel('average data rate of covert transmission (r_C_R_bar)')
 
     axes.set_ylabel(r'Average P_D ')
 
@@ -190,7 +194,7 @@ def myf_plot_Solutions_P_D(sys_param,x_axis_variables,Solutions_P_D, x_axis_vari
     plt.show()
 
 
-
+###### plot for DEP ######
 def myf_plot_DEP(sys_param, x_axis_variables, DEP, x_axis_variables_label):
     
     fig, axes = plt.subplots(1, 1)
@@ -234,7 +238,7 @@ def myf_plot_DEP(sys_param, x_axis_variables, DEP, x_axis_variables_label):
 
     elif x_axis_variables_label == "r_C_bar":
         axes.legend(loc="best")
-        axes.set_xlabel('covert rate')
+        axes.set_xlabel('average data rate of covert transmission (r_C_R_bar)')
 
     axes.set_ylabel(r'Average DEP')
     axes.set_xlim(min(x_axis_variables), max(x_axis_variables))
@@ -243,3 +247,117 @@ def myf_plot_DEP(sys_param, x_axis_variables, DEP, x_axis_variables_label):
     plt.show()
 
    
+#####Plot for r_P_R########
+
+def myf_plot_r_P_R(sys_param, x_axis_variables, r_P_R, x_axis_variables_label):
+
+    fig, axes = plt.subplots(1, 1)
+
+    axes.plot(x_axis_variables, r_P_R[0], 'b*-', markersize=12,
+              markerfacecolor="None", label=r'optimal ($r_{P_R}$)')
+    
+    axes.plot(x_axis_variables, r_P_R[1], 'mo--', markersize=6,
+              markerfacecolor="None", label=r'$5\%~P_S$ optimal ($r_{P_R}$)')
+    
+    axes.plot(x_axis_variables, r_P_R[2], 'm^--', markersize=6,
+              markerfacecolor="None", label=r'$1\%~P_S$ optimal ($r_{P_R}$)')
+    
+    axes.plot(x_axis_variables, r_P_R[3], 'mX--', markersize=6,
+              markerfacecolor="None", label=r'$0.1\%~P_S$ optimal ($r_{P_R}$)')
+    
+    axes.plot(x_axis_variables, r_P_R[4], 'ks--', markersize=6,
+              markerfacecolor="None", label=r'Random $P_D$ optimal ($r_{P_R}$)')
+    
+    axes.grid()
+
+    if x_axis_variables_label == "P_S_dBm_cand":
+        axes.legend(loc="best")
+        axes.set_xlabel('Source transmit power $P_S$ [dBm]')
+
+    elif x_axis_variables_label == "P_D_bar_dBm_cand":
+        axes.legend(loc="best")
+        axes.set_xlabel('Destination transmit power $P_D$ [dBm]')
+
+    elif x_axis_variables_label == "r_P_bar_cand":
+        axes.legend(loc="best")
+        axes.set_xlabel('Minimum quality of service for public message')
+
+    elif x_axis_variables_label == "res_SI_dB_cand":
+        axes.legend(loc="best")
+        axes.set_xlabel(r'Residual self-interference [dB]')
+
+    elif x_axis_variables_label == "err_min_cand":
+        axes.legend(loc="best")
+        axes.set_xlabel('Minimum DEP Threshold')
+
+    elif x_axis_variables_label == "noise_uncertainty_bound_cand":
+        axes.legend(loc="best")
+        axes.set_xlabel('Noise uncertainty bound [dB]')
+
+    elif x_axis_variables_label == "r_C_bar":
+        axes.legend(loc="best")
+        axes.set_xlabel('average data rate of covert transmission (r_C_R_bar)')
+
+    axes.set_ylabel(r'Average data rate of hidden receiver')
+
+    axes.set_xlim(min(x_axis_variables), max(x_axis_variables))
+    axes.set_ylim(0, max(np.amax(r_P_R), np.amax(r_P_R)) * 1.10)
+
+    plt.show()
+
+###### r_P_D ########
+
+def myf_plot_r_P_D(sys_param, x_axis_variables, r_P_D, x_axis_variables_label):
+
+    fig, axes = plt.subplots(1, 1)
+
+    axes.plot(x_axis_variables, r_P_D[0], 'b*-', markersize=12,
+              markerfacecolor="None", label=r'optimal ($r_{P_D}$)')
+    
+    axes.plot(x_axis_variables, r_P_D[1], 'mo--', markersize=6,
+              markerfacecolor="None", label=r'$5\%~P_S$ optimal ($r_{P_D}$)')
+    
+    axes.plot(x_axis_variables, r_P_D[2], 'm^--', markersize=6,
+              markerfacecolor="None", label=r'$1\%~P_S$ optimal ($r_{P_D}$)')
+    
+    axes.plot(x_axis_variables, r_P_D[3], 'mX--', markersize=6,
+              markerfacecolor="None", label=r'$0.1\%~P_S$ optimal ($r_{P_D}$)')
+    
+    axes.plot(x_axis_variables, r_P_D[4], 'ks--', markersize=6,
+              markerfacecolor="None", label=r'Random $P_D$ optimal ($r_{P_D}$)')
+    
+    axes.grid()
+
+    if x_axis_variables_label == "P_S_dBm_cand":
+        axes.legend(loc="best")
+        axes.set_xlabel('Source transmit power $P_S$ [dBm]')
+
+    elif x_axis_variables_label == "P_D_bar_dBm_cand":
+        axes.legend(loc="best")
+        axes.set_xlabel('Destination transmit power $P_D$ [dBm]')
+
+    elif x_axis_variables_label == "r_P_bar_cand":
+        axes.legend(loc="best")
+        axes.set_xlabel('Minimum quality of service for public message')
+
+    elif x_axis_variables_label == "res_SI_dB_cand":
+        axes.legend(loc="best")
+        axes.set_xlabel(r'Residual self-interference [dB]')
+
+    elif x_axis_variables_label == "err_min_cand":
+        axes.legend(loc="best")
+        axes.set_xlabel('Minimum DEP Threshold')
+
+    elif x_axis_variables_label == "noise_uncertainty_bound_cand":
+        axes.legend(loc="best")
+        axes.set_xlabel('Noise uncertainty bound [dB]')
+    elif x_axis_variables_label == "r_C_bar":
+        axes.legend(loc="best")
+        axes.set_xlabel('average data rate of covert transmission (r_C_R_bar)')
+
+    axes.set_ylabel(r'Average data rate of destination node')
+
+    axes.set_xlim(min(x_axis_variables), max(x_axis_variables))
+    axes.set_ylim(0, max(np.amax(r_P_D), np.amax(r_P_D)) * 1.10)
+
+    plt.show()
