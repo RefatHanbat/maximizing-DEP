@@ -63,28 +63,6 @@ def myf_plot_locations(sys_param, locations):
 
     plt.show()
 
-def myf_plot_test(r_C_R,x_axis_cand):
-
-    plt.figure()
-    x_axis_cand = x_axis_cand
-    
-    plt.plot(x_axis_cand, r_C_R[0], 'k^-', linewidth=2, markersize=8, label=f'covert Rate optimal 5% Ps (rC,R)')
-
-    plt.plot(x_axis_cand, r_C_R[1], 'go-', linewidth=2, markersize=6, label=f'covert Rate optimal 1% Ps (rC,R)')
-
-    plt.plot(x_axis_cand, r_C_R[2], 'ys-', linewidth=2, markersize=4, label=f'covert Rate optimal 0.1% Ps (rC,R)')
-
-    plt.plot(x_axis_cand, r_C_R[3], 'b*-', linewidth=2, markersize=4, label=f'covert Rate optimal 0.01% Ps (rC,R)')
-
-    plt.plot(x_axis_cand, r_C_R[4], 'v-', color='orange', linewidth=2, markersize=4, label=f'covert Rate optimal Random PD (rC,R)')
-    # plt.xticks(x_axis_cand, [f'{val:.1f}' for val in x_axis_cand])
-    
-    plt.grid(True)
-    plt.legend()
-    plt.xlabel('noise uncertainty bound dB')
-    plt.ylabel('Covert rate')
-    plt.show()
-
 def myf_plot_r_C_R(sys_param, x_axis_variables, r_C_R, x_axis_variables_label):
 
     fig, axes = plt.subplots(1, 1)
@@ -93,16 +71,16 @@ def myf_plot_r_C_R(sys_param, x_axis_variables, r_C_R, x_axis_variables_label):
               markerfacecolor="None", label=r'optimal ($r_{C_R}$)')
     
     axes.plot(x_axis_variables, r_C_R[1], 'mo--', markersize=6,
-              markerfacecolor="None", label=r'$5\%~P_S$ optimal ($r_{C_R}$)')
+              markerfacecolor="None", label=r'$5\%~P_S$ ($r_{C_R}$)')
     
     axes.plot(x_axis_variables, r_C_R[2], 'm^--', markersize=6,
-              markerfacecolor="None", label=r'$1\%~P_S$ optimal ($r_{C_R}$)')
+              markerfacecolor="None", label=r'$1\%~P_S$($r_{C_R}$)')
     
     axes.plot(x_axis_variables, r_C_R[3], 'mX--', markersize=6,
-              markerfacecolor="None", label=r'$0.1\%~P_S$ optimal ($r_{C_R}$)')
+              markerfacecolor="None", label=r'$0.1\%~P_S$($r_{C_R}$)')
     
     axes.plot(x_axis_variables, r_C_R[4], 'ks--', markersize=6,
-              markerfacecolor="None", label=r'Random $P_D$ optimal ($r_{C_R}$)')
+              markerfacecolor="None", label=r'Random $P_D$($r_{C_R}$)')
     
     axes.grid()
 
@@ -130,12 +108,17 @@ def myf_plot_r_C_R(sys_param, x_axis_variables, r_C_R, x_axis_variables_label):
         axes.legend(loc="best")
         axes.set_xlabel('Noise uncertainty bound [dB]')
 
+    elif x_axis_variables_label == "r_C_bar":
+        axes.legend(loc="best")
+        axes.set_xlabel('covert rate $\overline{r}_C$')
+
     axes.set_ylabel(r'Average covert rate')
 
     axes.set_xlim(min(x_axis_variables), max(x_axis_variables))
     axes.set_ylim(0, max(np.amax(r_C_R), np.amax(r_C_R)) * 1.10)
 
     plt.show()
+
 ######## plot for P_D #######
 def myf_plot_Solutions_P_D(sys_param,x_axis_variables,Solutions_P_D, x_axis_variables_label):
 
@@ -145,19 +128,19 @@ def myf_plot_Solutions_P_D(sys_param,x_axis_variables,Solutions_P_D, x_axis_vari
               markerfacecolor= "None",label=r'optimal ($P_D$))')
     
     axes.plot(x_axis_variables,Solutions_P_D[1],'mo--', markersize=6,
-              markerfacecolor= "None",label=r'5%~PS ooptimal ($P_D$))')
+              markerfacecolor= "None",label=r'5%~PS ($P_D$))')
     
     axes.plot(x_axis_variables,Solutions_P_D[2],'m^--', markersize=6,
-              markerfacecolor= "None",label=r'1%~PS optimal ($P_D$))')
+              markerfacecolor= "None",label=r'1%~PS($P_D$))')
     
     axes.plot(x_axis_variables,Solutions_P_D[3],'mX--', markersize=6,
-              markerfacecolor= "None",label=r'0.1%~PS optimal ($P_D$))')
+              markerfacecolor= "None",label=r'0.1%~PS($P_D$))')
     axes.plot(x_axis_variables,Solutions_P_D[4],'ks--', markersize=6,
-              markerfacecolor= "None",label=r'Random%~PS optimal ($P_D$))')
+              markerfacecolor= "None",label=r'Random%~PS ($P_D$))')
     
     axes.grid()
 
-    if(x_axis_variables_label =="P_S_dBm_cand"):
+    if(x_axis_variables_label =="P_S_dB_cand"):
         axes.legend(loc="best")
         axes.set_xlabel('Source transmit power $P_S_dBm$')
 
@@ -183,9 +166,9 @@ def myf_plot_Solutions_P_D(sys_param,x_axis_variables,Solutions_P_D, x_axis_vari
         
     elif x_axis_variables_label == "r_C_bar":
         axes.legend(loc="best")
-        axes.set_xlabel('average data rate of covert transmission (r_C_R_bar)')
+        axes.set_xlabel('covert rate $\overline{r}_C$')
 
-    axes.set_ylabel(r'Average P_D ')
+    axes.set_ylabel(r'Average $P_D$')
 
     axes.set_xlim(min(x_axis_variables),max(x_axis_variables))
 
@@ -201,13 +184,13 @@ def myf_plot_DEP(sys_param, x_axis_variables, DEP, x_axis_variables_label):
     
     axes.plot(x_axis_variables, DEP[0], 'b*-', markersize=12, markerfacecolor="None", label=r'optimal (DEP)')
     axes.plot(x_axis_variables, DEP[1], 'mo--', markersize=6, markerfacecolor="None",
-              label=r'$5\%~P_S$ optimal (DEP)')
+              label=r'$5\%~P_S$ (DEP)')
     axes.plot(x_axis_variables, DEP[2], 'm^--', markersize=6, markerfacecolor="None",
-              label=r'$1\%~P_S$ optimal (DEP)')
+              label=r'$1\%~P_S$ (DEP)')
     axes.plot(x_axis_variables, DEP[3], 'mX--', markersize=6, markerfacecolor="None",
-              label=r'$0.1%~P_S$ optimal (DEP)')
+              label=r'$0.1\%~P_S$ (DEP)')
     axes.plot(x_axis_variables, DEP[4], 'ks--', markersize=6, markerfacecolor="None",
-              label=r'$Random%~P_S$ optimal ($DEP$)')
+              label=r'$Random%~P_S$ ($DEP$)')
 
     axes.grid()
 
@@ -238,9 +221,9 @@ def myf_plot_DEP(sys_param, x_axis_variables, DEP, x_axis_variables_label):
 
     elif x_axis_variables_label == "r_C_bar":
         axes.legend(loc="best")
-        axes.set_xlabel('average data rate of covert transmission (r_C_R_bar)')
+        axes.set_xlabel('covert rate $\overline{r}_C$')
 
-    axes.set_ylabel(r'Average DEP')
+    axes.set_ylabel(r'Worst-DEP')
     axes.set_xlim(min(x_axis_variables), max(x_axis_variables))
     # axes.set_ylim(0.4, 0.5)
 
@@ -257,16 +240,16 @@ def myf_plot_r_P_R(sys_param, x_axis_variables, r_P_R, x_axis_variables_label):
               markerfacecolor="None", label=r'optimal ($r_{P_R}$)')
     
     axes.plot(x_axis_variables, r_P_R[1], 'mo--', markersize=6,
-              markerfacecolor="None", label=r'$5\%~P_S$ optimal ($r_{P_R}$)')
+              markerfacecolor="None", label=r'$5\%~P_S$($r_{P_R}$)')
     
     axes.plot(x_axis_variables, r_P_R[2], 'm^--', markersize=6,
-              markerfacecolor="None", label=r'$1\%~P_S$ optimal ($r_{P_R}$)')
+              markerfacecolor="None", label=r'$1\%~P_S$($r_{P_R}$)')
     
     axes.plot(x_axis_variables, r_P_R[3], 'mX--', markersize=6,
-              markerfacecolor="None", label=r'$0.1\%~P_S$ optimal ($r_{P_R}$)')
+              markerfacecolor="None", label=r'$0.1\%~P_S$($r_{P_R}$)')
     
     axes.plot(x_axis_variables, r_P_R[4], 'ks--', markersize=6,
-              markerfacecolor="None", label=r'Random $P_D$ optimal ($r_{P_R}$)')
+              markerfacecolor="None", label=r'Random $P_D$($r_{P_R}$)')
     
     axes.grid()
 
@@ -296,9 +279,9 @@ def myf_plot_r_P_R(sys_param, x_axis_variables, r_P_R, x_axis_variables_label):
 
     elif x_axis_variables_label == "r_C_bar":
         axes.legend(loc="best")
-        axes.set_xlabel('average data rate of covert transmission (r_C_R_bar)')
+        axes.set_xlabel('covert rate $\overline{r}_C$')
 
-    axes.set_ylabel(r'Average data rate of hidden receiver')
+    axes.set_ylabel(r'Data rate of hidden receiver $\overline{r}_{P,R}$')
 
     axes.set_xlim(min(x_axis_variables), max(x_axis_variables))
     axes.set_ylim(0, max(np.amax(r_P_R), np.amax(r_P_R)) * 1.10)
@@ -315,16 +298,16 @@ def myf_plot_r_P_D(sys_param, x_axis_variables, r_P_D, x_axis_variables_label):
               markerfacecolor="None", label=r'optimal ($r_{P_D}$)')
     
     axes.plot(x_axis_variables, r_P_D[1], 'mo--', markersize=6,
-              markerfacecolor="None", label=r'$5\%~P_S$ optimal ($r_{P_D}$)')
+              markerfacecolor="None", label=r'$5\%~P_S$($r_{P_D}$)')
     
     axes.plot(x_axis_variables, r_P_D[2], 'm^--', markersize=6,
-              markerfacecolor="None", label=r'$1\%~P_S$ optimal ($r_{P_D}$)')
+              markerfacecolor="None", label=r'$1\%~P_S$($r_{P_D}$)')
     
     axes.plot(x_axis_variables, r_P_D[3], 'mX--', markersize=6,
-              markerfacecolor="None", label=r'$0.1\%~P_S$ optimal ($r_{P_D}$)')
+              markerfacecolor="None", label=r'$0.1\%~P_S$($r_{P_D}$)')
     
     axes.plot(x_axis_variables, r_P_D[4], 'ks--', markersize=6,
-              markerfacecolor="None", label=r'Random $P_D$ optimal ($r_{P_D}$)')
+              markerfacecolor="None", label=r'Random $P_D$($r_{P_D}$)')
     
     axes.grid()
 
@@ -353,9 +336,9 @@ def myf_plot_r_P_D(sys_param, x_axis_variables, r_P_D, x_axis_variables_label):
         axes.set_xlabel('Noise uncertainty bound [dB]')
     elif x_axis_variables_label == "r_C_bar":
         axes.legend(loc="best")
-        axes.set_xlabel('average data rate of covert transmission (r_C_R_bar)')
+        axes.set_xlabel('covert rate $\overline{r}_C$')
 
-    axes.set_ylabel(r'Average data rate of destination node')
+    axes.set_ylabel(r'data rate of destination node $\overline{r}_{P,D}$')
 
     axes.set_xlim(min(x_axis_variables), max(x_axis_variables))
     axes.set_ylim(0, max(np.amax(r_P_D), np.amax(r_P_D)) * 1.10)

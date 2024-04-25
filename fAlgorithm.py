@@ -38,7 +38,7 @@ def myf_algorihtm_1(sys_param,channel):
     h_SD_sq_mgn = np.abs(h_SD)**2
 
     h_DW_sq_mgn = np.abs(h_DW)**2
-
+    
     first_portion = (sigma_square_R/h_DR_sq_mgn) * (2**(r_C_bar) - 1)
 
     second_portion = (1/h_DR_sq_mgn) * (h_SR_sq_mgn * P_S/(2**r_P_bar - 1) - sigma_square_R)
@@ -67,7 +67,15 @@ def myf_algorithm_2(sys_param,channel,P_S_proportion_fixed):
 
     err_min = sys_param["epsilon"]
     
-    ##Function###
+    r_C_bar = sys_param["r_C_bar"]
+
+    zeta =  sys_param["noise_uncertainty_zeta"]
+
+    sigma_square_W = sys_param["sigma_square_W"]
+
+    h_DW = channel["h_DW"]
+
+    h_DW_sq_mgn = np.abs(h_DW)**2 
 
     P_D_opt = min(P_S_proportion_fixed * P_S,P_D_bar)
 
@@ -77,7 +85,8 @@ def myf_algorithm_2(sys_param,channel,P_S_proportion_fixed):
 
     if((r_P_bar <= myf_r_P_R(sys_param,channel,solutions)) and \
             (r_P_bar <= myf_r_P_D(sys_param,channel,solutions)) and \
-              (myf_DEP(sys_param,channel,solutions) >= err_min)\
+            (r_C_bar <= myf_r_C_R(sys_param,channel,solutions)) and \
+              (zeta * sigma_square_W >= h_DW_sq_mgn * P_D_opt + (sigma_square_W / zeta ) )\
               ):
         
         None
