@@ -14,12 +14,15 @@ def myf_DEP(sys_param,channel,solutions):
     numerator = np.abs(h_DW)**2 * P_D + (1 / No_W_unc) * No_W
 
     denominator = (1/No_W_unc)*No_W
-
     
+    if (P_D == 0):
 
-    # DEP = (1/2)*(1-(1/(2*np.log(No_W_unc))) * np.log(numerator/denominator))
+        DEP = 0
+    else:
 
-    DEP = (1/2)*(1-(1/2*np.log(No_W_unc)) * np.log(numerator/denominator))
+        # DEP = (1/2)*(1-(1/(2*np.log(No_W_unc))) * np.log(numerator/denominator))
+
+        DEP = (1/2)*(1-(1/2*np.log(No_W_unc)) * np.log(numerator/denominator))
 
     return DEP
 
